@@ -1,0 +1,28 @@
+.INCLUDE  "m328Pdef.inc"
+
+.DEF	var_a = r16
+.DEF	var_b = r17
+.DEF	var_c = r18
+
+.CSEG
+.ORG 	0x0000
+		rjmp	main
+
+main:	ldi	var_a,-5
+		ldi var_b,-5
+		
+		cp  var_a,var_b	;	b<a = a>b 100>a
+		brlt LESS		;สามารถสลับกันได้เป็น var_a,var_b และใช้ breq false / brge true ;brlt น้อยกว่า
+		breq EQUAL		;กรณี a=b
+		;breg MORE
+
+MORE:	ldi var_c,1
+		rjmp endif
+LESS:	ldi	var_c,-1
+		rjmp endif
+EQUAL:	ldi var_c,0 ;ใช้ clr var_c ทำให้ var_c = 0
+
+endif:	muls var_b,var_c
+		mov var_a,r0
+end:	rjmp end
+

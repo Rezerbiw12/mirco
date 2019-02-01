@@ -1,0 +1,23 @@
+.INCLUDE  "m328Pdef.inc"
+
+.DEF	var_a = r16
+.DEF	var_b = r17
+
+.CSEG
+.ORG 	0x0000
+		rjmp	main
+
+main:	ldi	var_a,-5
+		ldi var_b,-1
+		
+		cp  var_b,var_a
+		brlt true		;สามารถสลับกันได้เป็น var_a,var_b และใช้ breq false / brge true
+		;rjmp false
+		rjmp endif
+false:	add	var_a,var_b
+		rjmp endif
+true:	inc var_a
+		;rjmp endif 
+endif:	inc var_b
+end:	rjmp end
+
